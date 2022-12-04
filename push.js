@@ -69,6 +69,24 @@ app.post('/setExpiryNotification', async (req, res) => {
 })
 
 
+app.post('/notifyUser', async (req, res) => {
+  try {
+      const body = req.body;
+      const apiRes = await sendNotificationToAddress(
+          body.sender_address,
+          body.reciever_address,
+          "NFT Has been Minted!",
+          `${body.reciever_address}'s has minted an nft from ${body.sender_address}.`,
+          "NFT Has been Minted!",
+          `${body.reciever_address}'s has minted an nft from ${body.sender_address}.`,
+      );
+      res.status(200).send("request successfull.")
+  } catch (e) {
+      res.status(500).send("request failed.")
+      console.error(e);
+  }
+})
+
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
