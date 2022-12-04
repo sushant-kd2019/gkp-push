@@ -88,6 +88,34 @@ app.post('/notifyUser', async (req, res) => {
 })
 
 
+app.post('/notifyOrganization', async (req, res) => {
+  try {
+      const organizer_address = req.body.organizer_address;
+      await PushAPI.payloads.sendNotification({
+        signer,
+        type: 3,
+        identityType: 0,
+        notification: {
+          title: "NFTs have been dropped.",
+          body: "NFTs have been dropped for your organisation."
+        },
+        payload: {
+          title: "NFTs have been dropped.",
+          body: "NFTs have been dropped for your organisation.",
+          cta: '',
+          img: ''
+        },
+        recipients: organizer_address,
+        channel: CHANNEL_ADDRESS,
+        env: 'staging'
+      });      
+    res.status(200).send("request successfull.")
+  } catch (e) {
+      res.status(500).send("request failed.")
+      console.error(e);
+  }
+})
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
